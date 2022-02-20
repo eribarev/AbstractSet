@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 #include <list>
+#include <set>
 #include <vector>
 
 namespace setAdapters {
@@ -178,6 +179,62 @@ class DequeAdapter {
 
   private:
 	std::deque<T> innerContainer;
+};
+
+template <typename T>
+class SetAdapter {
+  public:
+	typedef T keyType;
+	typedef T innerType;
+
+	SetAdapter() = default;
+	SetAdapter(const std::set<T> &s) : innerContainer(s){};
+	SetAdapter(std::initializer_list<T> l) : innerContainer(l){};
+
+	size_t size() const
+	{
+		return innerContainer.size();
+	}
+
+	bool contains(const T &x) const
+	{
+		return innerContainer.find(x) != innerContainer.end();
+	}
+
+	void display() const
+	{
+		for (const T &x : innerContainer) {
+			std::cout << x << " ";
+		}
+		std::cout << std::endl;
+	}
+
+	void sort()
+	{
+	}
+
+	void add(const T &x)
+	{
+		innerContainer.insert(x);
+	}
+
+	void remove(const T &x)
+	{
+		innerContainer.erase(x);
+	}
+
+	void forEach(std::function<void(const T &x)> f) const
+	{
+		std::for_each(innerContainer.begin(), innerContainer.end(), f);
+	}
+
+	static T getKey(const T &x)
+	{
+		return x;
+	}
+
+  private:
+	std::set<T> innerContainer;
 };
 
 } // namespace setAdapters
