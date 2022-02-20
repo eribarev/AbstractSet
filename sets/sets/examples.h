@@ -4,3 +4,4 @@
 
 void vectorExample();
 void listExample();
+void dequeExample();

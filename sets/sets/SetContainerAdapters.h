@@ -1,10 +1,11 @@
 #pragma once
 
 #include <algorithm>
+#include <deque>
 #include <functional>
 #include <iostream>
-#include <vector>
 #include <list>
+#include <vector>
 
 namespace setAdapters {
 
@@ -120,6 +121,63 @@ class ListAdapter {
 
   private:
 	std::list<T> innerContainer;
+};
+
+template <typename T>
+class DequeAdapter {
+  public:
+	typedef T keyType;
+	typedef T innerType;
+
+	DequeAdapter() = default;
+	DequeAdapter(const std::deque<T> &d) : innerContainer(d){};
+	DequeAdapter(std::initializer_list<T> l) : innerContainer(l){};
+
+	size_t size() const
+	{
+		return innerContainer.size();
+	}
+
+	bool contains(const T &x) const
+	{
+		return std::find(innerContainer.begin(), innerContainer.end(), x) != innerContainer.end();
+	}
+
+	void display() const
+	{
+		for (const T &x : innerContainer) {
+			std::cout << x << " ";
+		}
+		std::cout << std::endl;
+	}
+
+	void sort()
+	{
+		std::sort(innerContainer.begin(), innerContainer.end());
+	}
+
+	void add(const T &x)
+	{
+		innerContainer.push_back(x);
+	}
+
+	void remove(const T &x)
+	{
+		innerContainer.erase(std::find(innerContainer.begin(), innerContainer.end(), x));
+	}
+
+	void forEach(std::function<void(const T &x)> f) const
+	{
+		std::for_each(innerContainer.begin(), innerContainer.end(), f);
+	}
+
+	static T getKey(const T &x)
+	{
+		return x;
+	}
+
+  private:
+	std::deque<T> innerContainer;
 };
 
 } // namespace setAdapters

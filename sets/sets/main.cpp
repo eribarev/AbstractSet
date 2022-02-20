@@ -9,6 +9,7 @@ int main()
 {
 	vectorExample();
 	listExample();
+	dequeExample();
 
 	return 0;
 }
