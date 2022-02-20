@@ -11,6 +11,7 @@ int main()
 	listExample();
 	dequeExample();
 	setExample();
+	mapExample();
 
 	return 0;
 }
